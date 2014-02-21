@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="es.tetexe.rdlv"
+    android:versionCode="9"
+    android:versionName="1.5" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="19" />
+
+    <permission
+        android:name="es.tetexe.lugares.READ_DATABASE"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="es.tetexe.lugares.WRITE_DATABASE"
+        android:protectionLevel="normal" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <!--
+     The following two permissions are not required to use
+     Google Maps Android API v2, but are recommended.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/nombre_app"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="es.tetexe.rdlv.PrincipalActivity"
+            android:label="@string/nombre_app" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="es.tetexe.rdlv.AyudaApp"
+            android:parentActivityName="es.tetexe.rdlv.PrincipalActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.tetexe.rdlv.PrincipalActivity" />
+        </activity>
+        <activity
+            android:name="es.tetexe.rdlv.ActivityList"
+            android:parentActivityName="es.tetexe.rdlv.PrincipalActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.tetexe.rdlv.PrincipalActivity" />
+        </activity>
+        <activity
+            android:name="es.tetexe.rdlv.MapaLugaresActivity"
+            android:parentActivityName="es.tetexe.rdlv.PrincipalActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.tetexe.rdlv.PrincipalActivity" />
+        </activity>
+        <activity
+            android:name="es.tetexe.rdlv.MostrarLugar"
+            android:parentActivityName="es.tetexe.rdlv.PrincipalActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.tetexe.rdlv.PrincipalActivity" />
+        </activity>
+        <activity
+            android:name="es.tetexe.rdlv.EditarActivity"
+            android:parentActivityName="es.tetexe.rdlv.PrincipalActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.tetexe.rdlv.PrincipalActivity" />
+        </activity>
+        <activity
+            android:name="com.facebook.LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+		
+        <provider
+            android:name="es.tetexe.rdlv.ActivityContentProvider"
+            android:authorities="es.tetexe.lugares"
+            android:exported="true"
+            android:readPermission="es.tetexe.lugares.READ_DATABASE"
+            android:writePermission="es.tetexe.lugares.WRITE_DATABASE" />
+        <provider
+            android:name="com.facebook.NativeAppCallContentProvider"
+            android:authorities="com.facebook.app.NativeAppCallContentProvider602826683129330" />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyC7bDctlY-45LkG6LiM88IOAzSW9TrCIVY" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_id" />
+    </application>
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+</manifest>

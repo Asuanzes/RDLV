@@ -1,0 +1,28 @@
+<resources>
+
+    
+	<string name="lista_lugares">Lista</string>
+	<string name="mapa">Mapa</string>
+	<string name="nombre_app">RDLV</string>
+	<string name="options">Opciones</string>
+	<string name="menu_map">Mapa</string>
+	<string name="menu_location">Mi ubicación</string>
+	<string name="menu_gallery">Galería</string>
+	<string name="menu_lista">Lista</string>
+	<string name="edit">Editar</string>
+	<string name="titulo">Nombre</string>
+	<string name="descrip">Descripción</string>
+	<string name="delete">Eliminar</string>
+	<string name="save">Guardar</string>
+	<string name="crear">Crear</string>
+	<string name="seguro">¿Está seguro de aliminar el registro?</string>
+	<string name="ok">Aceptar</string>
+	<string name="cancelar">Cancelar</string>
+	<string name="guardar">Va a modificar este lugar</string>
+	<string name="nuevo_lugar">Añade un lugar</string>
+	<string name="menu_ayuda">Ayuda</string>
+	<string name="titulo_ayuda">Como usar esta aplicación</string>
+	<string name="share">Compartir</string>
+	<string name="app_id">602826683129330</string>
+	<string name="loginfb">Login</string>
+</resources>

@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+    <item
+        android:id="@+id/menu_lista"
+        android:icon="@drawable/collections_view_as_list"
+        android:showAsAction="always|withText"
+        android:title="@string/menu_lista"/>
+    
+    <item
+        android:id="@+id/edit"
+        android:icon="@drawable/content_edit"
+        android:showAsAction="always|withText"
+        android:title="@string/edit"/>
+    <item
+        android:id="@+id/shaFc"
+        android:icon="@drawable/facebook"
+        android:showAsAction="always|withText"
+        android:title="@string/share"/>
+
+
+</menu>

@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+    <item
+        android:id="@+id/menu_addLoc"
+        android:icon="@drawable/device_access_location_found"
+        android:showAsAction="always|withText"
+        android:title="@string/menu_location"/>
+    <item
+        android:id="@+id/menu_lista"
+        android:icon="@drawable/collections_view_as_list"
+        android:showAsAction="always|withText"
+        android:title="@string/menu_lista"/>
+
+</menu>

@@ -1,0 +1,63 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- <fragment -->
+    <!-- android:name="com.example.maps.fragments.TopFragment" -->
+    <!-- android:layout_width="fill_parent" -->
+    <!-- android:layout_height="100dip" -->
+    <!-- android:tag="topFragment" /> -->
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" />
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:weightSum="3"
+        android:orientation="horizontal" 
+        
+        >
+
+
+        <Button
+            android:id="@+id/hibrido"
+            android:layout_width="0dp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/my_buttons"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Híbrido"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/terreno"
+            android:layout_width="0dp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/my_buttons"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Terreno"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/satelite"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/my_buttons"
+            android:text="Satelite"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
