@@ -1,6 +1,5 @@
 package es.tetexe.rdlv;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -30,6 +29,7 @@ import com.sromku.simple.fb.SimpleFacebook.OnLoginListener;
 import com.sromku.simple.fb.SimpleFacebook.OnProfileRequestListener;
 import com.sromku.simple.fb.SimpleFacebook.OnPublishListener;
 import com.sromku.simple.fb.SimpleFacebookConfiguration;
+import com.sromku.simple.fb.entities.Feed;
 import com.sromku.simple.fb.entities.Photo;
 import com.sromku.simple.fb.entities.Profile;
 
@@ -47,22 +47,24 @@ public class MostrarLugar extends Activity {
 	 */
 	protected static final String TAG = MostrarLugar.class.getName();
 
-	private SimpleFacebook mSimpleFacebook;
+	public SimpleFacebook mSimpleFacebook;
 	TextView titulo;
 	ImageView fotoLugar;
 	TextView descripLugar;
 	TextView fechaLugar;
 	TextView fecha;
 	Cursor c;
-	
+
 	@SuppressWarnings("unused")
 	private static String lat, lon, idmarker, idMarker;
 	private int id, idRetorno;
 	private static String location, name, idFb;
 	private static Photo photo;
 
+	// Asyntask
 	final Handler handle = new Handler();
 
+	// Recuperar datos facebook
 	protected void profileThread() {
 		Thread t = new Thread() {
 			public void run() {
@@ -81,15 +83,16 @@ public class MostrarLugar extends Activity {
 
 		@Override
 		public void run() {
-			if (idFb==null) {
+			if (idFb == null) {
 				getProfile();
 				toast("Obteniendo datos de su perfil de Facebook");
 				toast("Completado");
 			}
-			
+
 		}
 	};
 
+	// Compartir lugar
 	protected void shareThread() {
 		Thread tr = new Thread() {
 			public void run() {
@@ -112,16 +115,39 @@ public class MostrarLugar extends Activity {
 		}
 	};
 
+	// Compartir App
+	protected void shareAppThread() {
+		Thread tr = new Thread() {
+			public void run() {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				handle.post(shareApp);
+			}
+		};
+		tr.start();
+	}
+
+	final Runnable shareApp = new Runnable() {
+
+		@Override
+		public void run() {
+			shareApp();
+		}
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		
 		Permissions[] permissions = new Permissions[] {
 				Permissions.USER_PHOTOS, Permissions.EMAIL,
 				Permissions.PUBLISH_ACTION, Permissions.PUBLISH_STREAM,
 				Permissions.USER_CHECKINS, Permissions.USER_LOCATION,
-				Permissions.FRIENDS_LOCATION, Permissions.EMAIL, Permissions.USER_BIRTHDAY, Permissions.USER_ABOUT_ME };
+				Permissions.FRIENDS_LOCATION, Permissions.EMAIL,
+				Permissions.USER_BIRTHDAY, Permissions.USER_ABOUT_ME };
 		SimpleFacebookConfiguration configuration = new SimpleFacebookConfiguration.Builder()
 				.setAppId("602826683129330").setNamespace("rosadelosvientos")
 				.setPermissions(permissions).build();
@@ -205,7 +231,7 @@ public class MostrarLugar extends Activity {
 					if (colFoto != null) {
 
 						Bitmap resizedBitmap = DecodeImagen
-								.decodeSampledBitmapFromFile(colFoto, 400, 400);
+								.decodeSampledBitmapFromFile(colFoto, 600, 600);
 
 						fotoLugar.setAdjustViewBounds(true);
 						fotoLugar.setImageBitmap(resizedBitmap);
@@ -252,7 +278,7 @@ public class MostrarLugar extends Activity {
 				if (colFoto != null) {
 
 					Bitmap resizedBitmap = DecodeImagen
-							.decodeSampledBitmapFromFile(colFoto, 400, 400);
+							.decodeSampledBitmapFromFile(colFoto, 600, 600);
 
 					fotoLugar.setAdjustViewBounds(true);
 					fotoLugar.setImageBitmap(resizedBitmap);
@@ -267,7 +293,7 @@ public class MostrarLugar extends Activity {
 			}
 
 		}
-		
+
 	}// ONCREATE
 
 	@Override
@@ -279,12 +305,12 @@ public class MostrarLugar extends Activity {
 		// login
 		mSimpleFacebook.login(onLoginListener);
 		Session session = Session.getActiveSession();
-		
-		    if (session.isOpened()) {
-		        session.getAccessToken();
-		        profileThread();
-		    }
-		
+
+		if (session.isOpened()) {
+			session.getAccessToken();
+			profileThread();
+		}
+
 	}
 
 	@Override
@@ -306,47 +332,43 @@ public class MostrarLugar extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
+		case R.id.shaApp:
 
-		case R.id.menu_lista:
+			AlertDialog.Builder build = new Builder(MostrarLugar.this);
 
-			Intent intents = new Intent(getApplicationContext(),
-					ActivityList.class);
-			startActivity(intents);
-			break;
-		case R.id.shaFc:
-			
-			AlertDialog.Builder builder = new Builder(MostrarLugar.this);
+			build.setTitle("Gracias por compartir Rdlv");
+			build.setMessage("¿Quieres compartir esta aplicación con tus amigos?");
 
-			builder.setTitle("Publicar");
-			builder.setMessage("¿Quieres publicar esta imagen en Facebook?");
-
-			builder.setPositiveButton("Aceptar",
+			build.setPositiveButton("Aceptar",
 					new DialogInterface.OnClickListener() {
 
 						@Override
-						public void onClick(DialogInterface dialog,
-								int which) {
+						public void onClick(DialogInterface dialog, int which) {
 
-							shareThread();
+							shareAppThread();
 						}
 					});
 
-			builder.setNegativeButton("Cancelar",
+			build.setNegativeButton("Cancelar",
 					new DialogInterface.OnClickListener() {
 
 						@Override
-						public void onClick(DialogInterface dialog,
-								int which) {
+						public void onClick(DialogInterface dialog, int which) {
 
 							dialog.dismiss();
 
 						}
 
 					});
-			builder.create().show();
+			build.create().show();
 
 			break;
+		case R.id.menu_lista:
 
+			Intent intents = new Intent(getApplicationContext(),
+					ActivityList.class);
+			startActivity(intents);
+			break;
 		case R.id.edit:
 			// Dato para que EditarActivity sepa si ha sido iniciada desde
 			// mostrarLugares o desde el mapa
@@ -371,6 +393,39 @@ public class MostrarLugar extends Activity {
 
 			startActivity(i);
 			break;
+		case R.id.shaFc:
+
+			AlertDialog.Builder builder = new Builder(MostrarLugar.this);
+
+			builder.setTitle("Publicar");
+			builder.setMessage("¿Quieres publicar esta imagen en Facebook?");
+
+			builder.setPositiveButton("Aceptar",
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+
+							shareThread();
+						}
+					});
+
+			builder.setNegativeButton("Cancelar",
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+
+							dialog.dismiss();
+
+						}
+
+					});
+			builder.create().show();
+
+			break;
+
+		
 		case android.R.id.home:
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
@@ -379,41 +434,37 @@ public class MostrarLugar extends Activity {
 		return true;
 
 	}
+
 	// login listener
-	OnLoginListener onLoginListener = new SimpleFacebook.OnLoginListener()
-	{
+	OnLoginListener onLoginListener = new SimpleFacebook.OnLoginListener() {
 
-	    @Override
-	    public void onFail(String reason)
-	    {
-	        Log.w(TAG, reason);
-	    }
+		@Override
+		public void onFail(String reason) {
+			Log.w(TAG, reason);
+		}
 
-	    @Override
-	    public void onException(Throwable throwable)
-	    {
-	        Log.e(TAG, "Bad thing happened", throwable);
-	    }
+		@Override
+		public void onException(Throwable throwable) {
+			Log.e(TAG, "Bad thing happened", throwable);
+		}
 
-	    @Override
-	    public void onThinking()
-	    {
-	        // show progress bar or something to the user while login is happening
-	        Log.i(TAG, "In progress");
-	    }
+		@Override
+		public void onThinking() {
+			// show progress bar or something to the user while login is
+			// happening
+			Log.i(TAG, "In progress");
+		}
 
-	    @Override
-	    public void onLogin()
-	    {
-	        // change the state of the button or do whatever you want
-	        Log.i(TAG, "Logged in");
-	    }
+		@Override
+		public void onLogin() {
+			// change the state of the button or do whatever you want
+			Log.i(TAG, "Logged in");
+		}
 
-	    @Override
-	    public void onNotAcceptingPermissions()
-	    {
-	        Log.w(TAG, "User didn't accept read permissions");
-	    }
+		@Override
+		public void onNotAcceptingPermissions() {
+			Log.w(TAG, "User didn't accept read permissions");
+		}
 
 	};
 
@@ -427,17 +478,14 @@ public class MostrarLugar extends Activity {
 
 			@Override
 			public void onFail(String reason) {
-				
-				
+
 				// insure that you are logged in before getting the profile
 				Log.w(TAG, reason);
 			}
 
 			@Override
 			public void onException(Throwable throwable) {
-				
-				
-				
+
 				Log.e(TAG, "Bad thing happened", throwable);
 			}
 
@@ -451,28 +499,26 @@ public class MostrarLugar extends Activity {
 
 			@Override
 			public void onComplete(Profile profile) {
-				
-				 
-			        
+
 				idFb = profile.getId();
 				name = profile.getName();
-				
+
 				try {
 					if (!profile.getLocation().getId().isEmpty()) {
-						
+
 						location = profile.getLocation().getId();
-						
-					}else {
+
+					} else {
 						location = " ";
 					}
 				} catch (Throwable throwable) {
 					// TODO Bloque catch generado automáticamente
 					throwable.printStackTrace();
 				}
-				
+
 				Log.i(TAG, "My profile id = " + idFb);
-				Log.i(TAG, "Location1 = " + location);	        
-			      
+				Log.i(TAG, "Location1 = " + location);
+
 				// String location =
 				// profile.getLocation().getId().toString();
 
@@ -521,14 +567,18 @@ public class MostrarLugar extends Activity {
 			Bitmap resizedBitmap = DecodeImagen.decodeSampledBitmapFromFile(
 					colFoto, 400, 400);
 			photo = new Photo(resizedBitmap);
-			String post = c.getString(this.c.getColumnIndex("titulo")).toUpperCase() + " " + "\n" + this.c.getString(this.c.getColumnIndex("descripcion")) + ", " + this.c.getString(this.c.getColumnIndex("fecha"));
+			String post = c.getString(this.c.getColumnIndex("titulo"))
+					.toUpperCase()
+					+ " "
+					+ "\n"
+					+ this.c.getString(this.c.getColumnIndex("descripcion"))
+					+ "\n" + this.c.getString(this.c.getColumnIndex("fecha"));
 			Log.i(TAG, "Location2 = " + location);
 			photo.addDescription(post);
-			
-			if (location!=null && location != " ") {
+
+			if (location != null && location != " ") {
 				photo.addPlace(location);
 			}
-			
 
 			// photo.addPrivacy("ALL_FRIENDS"); //CONFIGURAR PARA MENU SELECCI�N
 
@@ -541,6 +591,52 @@ public class MostrarLugar extends Activity {
 		}
 
 	}
-	
+
+	public void shareApp() {
+		// create publish listener
+		OnPublishListener onPublishListener = new SimpleFacebook.OnPublishListener() {
+
+			@Override
+			public void onFail(String reason) {
+				// insure that you are logged in before publishing
+				Log.w(TAG, reason);
+			}
+
+			@Override
+			public void onException(Throwable throwable) {
+				Log.e(TAG, "Bad thing happened", throwable);
+			}
+
+			@Override
+			public void onThinking() {
+				// show progress bar or something to the user while publishing
+				Log.i(TAG, "In progress");
+				toast("GRACIAS!!! " + name);
+			}
+
+			@Override
+			public void onComplete(String postId) {
+				Log.i(TAG, "Published successfully. The new post id = "
+						+ postId);
+				toast(name + "  Rdlv ya está en tu muro!!");
+			}
+		};
+
+		// build feed
+		Feed feed = new Feed.Builder()
+				.setMessage("Prueba esto...")
+				.setName("Rosa de los vientos, Rdlv")
+				.setCaption("Publica con un toque")
+				.setDescription(
+						"Publicar en Facebook nunca ha sido tan fácil!! Tus lugares, tus fotos...lo que piensas")
+				.setPicture(
+						"http://i746.photobucket.com/albums/xx107/Alejandro_Suanzes_Otero/RDLVfB_zpsdbf1b682.png")
+				.setLink(
+						"https://play.google.com/store/apps/details?id=es.tetexe.rdlv&hl=es_419")
+				.build();
+
+		// publish the feed
+		mSimpleFacebook.publish(feed, onPublishListener);
+	}
 
 }

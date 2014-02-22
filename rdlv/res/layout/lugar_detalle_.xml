@@ -18,7 +18,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
             android:textColor="#FFFFFF"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:textStyle="normal" />
 
         <ImageView

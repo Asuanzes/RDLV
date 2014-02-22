@@ -40,7 +40,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-
 /*
  * Esta activity se encargará de mostrar los markers de los lugares,
  * de establecer nuetra posición actual, de lanzar la activity
@@ -94,7 +93,7 @@ public class MapaLugaresActivity extends FragmentActivity implements
 		public void run() {
 			// Inicializamos el método de geoLocalización
 			miPosicionActual();
-			
+			map.setMyLocationEnabled(true);
 		}
 	};
 	String[] projection = new String[] { ActivityContentProvider._ID,
@@ -130,8 +129,6 @@ public class MapaLugaresActivity extends FragmentActivity implements
 
 		setContentView(R.layout.main_map);
 
-		
-
 		Button satelite = (Button) findViewById(R.id.satelite);
 		Button hibrido = (Button) findViewById(R.id.hibrido);
 		Button terreno = (Button) findViewById(R.id.terreno);
@@ -143,12 +140,11 @@ public class MapaLugaresActivity extends FragmentActivity implements
 		satelite.setOnClickListener(onClickListener);
 		hibrido.setOnClickListener(onClickListener);
 		terreno.setOnClickListener(onClickListener);
-		
+
 		setUpMapIfNeeded();
-		map.setMyLocationEnabled(true);
+
 		map.setOnMapClickListener(this);
-		
-		
+
 		/*
 		 * Inicializamos el ContentProvider definido en la aplicación con los
 		 * campos que vamos a ncesitar en esta clase haciendo referencia a la
@@ -163,12 +159,17 @@ public class MapaLugaresActivity extends FragmentActivity implements
 			map.setInfoWindowAdapter(new MyInfoWindowAdapter());
 
 			addMarker();
+			
+
 		}
-		// Definiendo la posción inicial de la cámara al iniciar el mapa
-				position = new CameraPosition.Builder()
-						.target(latlong).zoom(3).build();
-				CameraUpdate update = CameraUpdateFactory.newCameraPosition(position);
-				map.animateCamera(update);
+		map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+		if (marker!=null) {
+			// Definiendo la posción inicial de la cámara al iniciar el mapa
+			position = new CameraPosition.Builder().target(latlong).zoom(17).bearing(60).tilt(90).build();
+			CameraUpdate update = CameraUpdateFactory.newCameraPosition(position);
+			map.animateCamera(update);
+		}
+		
 		/*
 		 * Establecemos una acción para la pulsación en la ventana de
 		 * información del marker, lanza la activity mostrarlugares pasandole la
@@ -191,7 +192,7 @@ public class MapaLugaresActivity extends FragmentActivity implements
 				marker.showInfoWindow();
 			}
 		});
-		
+
 	}// ONCREATE
 
 	/*
@@ -244,7 +245,7 @@ public class MapaLugaresActivity extends FragmentActivity implements
 			 */
 			@Override
 			public void onLocationChanged(Location location) {
-				
+
 				int latitud = (int) (location.getLatitude() * 1E6);
 				int longitud = (int) (location.getLongitude() * 1E6);
 
@@ -255,8 +256,8 @@ public class MapaLugaresActivity extends FragmentActivity implements
 
 		// Actualizamos los datos de la posición del dispositivo
 		// mediante los datos que recibe el LocationManager provider.
-		locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER,
-				0L, 0f, locListener);
+		locationManager.requestLocationUpdates(
+				LocationManager.PASSIVE_PROVIDER, 0L, 0f, locListener);
 
 		// Obtenemos la última posición registrada en el provider
 		location = locationManager.getLastKnownLocation(proveedor);
@@ -337,7 +338,7 @@ public class MapaLugaresActivity extends FragmentActivity implements
 		if (map == null) {
 			map = ((SupportMapFragment) getSupportFragmentManager()
 					.findFragmentById(R.id.map)).getMap();
-			
+
 		}
 
 	}
@@ -411,7 +412,7 @@ public class MapaLugaresActivity extends FragmentActivity implements
 											.substring(
 													0,
 													this.c.getString(
-															this.c.getColumnIndex("descripcion"))
+															this.c.getColumnIndex("titulo"))
 															.lastIndexOf(" ",
 																	105))
 											+ "...")
@@ -419,13 +420,12 @@ public class MapaLugaresActivity extends FragmentActivity implements
 											this.c.getString(this.c
 													.getColumnIndex("_id")))
 									.position(this.latlong));
-				}else {
+				} else {
 					marker = map.addMarker(new MarkerOptions()
-					.title(c.getString(c.getColumnIndex("titulo")))
-					.snippet(c.getString(c.getColumnIndex("_id")))
-					.position(latlong));
+							.title(c.getString(c.getColumnIndex("descripcion")))
+							.snippet(c.getString(c.getColumnIndex("_id")))
+							.position(latlong));
 				}
-				
 
 				if (c.getString(c.getColumnIndex("foto")) != null) {
 					markers.put(marker.getId(),
@@ -504,10 +504,11 @@ public class MapaLugaresActivity extends FragmentActivity implements
 		}
 
 	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
-		
+
 		locationThread();
 	}
 }

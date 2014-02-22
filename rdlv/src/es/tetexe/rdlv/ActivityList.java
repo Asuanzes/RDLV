@@ -222,7 +222,7 @@ public class ActivityList extends Activity {
 			if (img != null) {
 
 				Bitmap resizedBitmap = DecodeImagen
-						.decodeSampledBitmapFromFile(img, 100, 100);
+						.decodeSampledBitmapFromFile(img, 115, 115);
 				holder.image.setAdjustViewBounds(true);
 				holder.image.setImageBitmap(resizedBitmap);
 
