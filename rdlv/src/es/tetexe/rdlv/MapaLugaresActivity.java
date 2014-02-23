@@ -120,8 +120,8 @@ public class MapaLugaresActivity extends FragmentActivity implements
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 			TextView title = (TextView) findViewById(actionBarTitleId);
 			if (title != null) {
-				Typeface fuente = Typeface.createFromAsset(getAssets(),
-						"perigord.ttf");
+				Typeface fuente = Typeface.createFromAsset(this.getAssets(),
+						"fonts/perigord.ttf");
 				title.setTypeface(fuente);
 				title.setTextColor(Color.BLACK);
 			}
@@ -132,8 +132,9 @@ public class MapaLugaresActivity extends FragmentActivity implements
 		Button satelite = (Button) findViewById(R.id.satelite);
 		Button hibrido = (Button) findViewById(R.id.hibrido);
 		Button terreno = (Button) findViewById(R.id.terreno);
-		Typeface fuente = Typeface.createFromAsset(getAssets(),
-				"TravelingTypewriter.ttf");
+		//Definiendo una fuente desde la carpeta assets/fonts
+		Typeface fuente= Typeface.createFromAsset(this.getAssets(),
+				"fonts/TravelingTypewriter.ttf");
 		satelite.setTypeface(fuente);
 		hibrido.setTypeface(fuente);
 		terreno.setTypeface(fuente);
@@ -493,8 +494,9 @@ public class MapaLugaresActivity extends FragmentActivity implements
 			// TextView tvDescr = (TextView) v.findViewById(R.id.descripcioni);
 			// tvDescr.setText(marker.getSnippet());
 
-			Typeface fuente = Typeface.createFromAsset(getAssets(),
-					"TravelingTypewriter.ttf");
+			//Definiendo una fuente desde la carpeta assets/fonts
+			Typeface fuente = Typeface.createFromAsset(getApplicationContext().getAssets(),
+					"fonts/TravelingTypewriter.ttf");
 
 			tvTitulo.setTypeface(fuente);
 			// tvDescr.setTypeface(fuente);

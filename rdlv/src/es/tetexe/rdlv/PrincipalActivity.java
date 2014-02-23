@@ -49,9 +49,9 @@ public class PrincipalActivity extends Activity {
 			TextView title = (TextView) findViewById(actionBarTitleId);
 
 			if (title != null) {
-
-				Typeface fuente = Typeface.createFromAsset(getAssets(),
-						"TravelingTypewriter.ttf");
+				//Definiendo una fuente desde la carpeta assets/fonts
+				Typeface fuente = Typeface.createFromAsset(this.getAssets(),
+						"fonts/perigord.ttf");
 
 				title.setTypeface(fuente);
 				title.setTextColor(Color.BLACK);
@@ -73,8 +73,8 @@ public class PrincipalActivity extends Activity {
 		btnLista.setOnClickListener(onClickListener);
 
 		// Definiendo un tipo de fuente personalizada en los botones
-		Typeface fuente = Typeface.createFromAsset(getAssets(),
-				"TravelingTypewriter.ttf");
+		Typeface fuente = Typeface.createFromAsset(this.getAssets(),
+				"fonts/TravelingTypewriter.ttf");
 
 		btnLista.setTypeface(fuente);
 		btnMap.setTypeface(fuente);

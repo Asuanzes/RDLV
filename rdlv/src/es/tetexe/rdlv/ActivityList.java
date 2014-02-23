@@ -49,8 +49,9 @@ public class ActivityList extends Activity {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 			TextView title = (TextView) findViewById(actionBarTitleId);
 			if (title != null) {
-				Typeface fuente = Typeface.createFromAsset(getAssets(),
-						"perigord.ttf");
+				//Definiendo una fuente desde la carpeta assets/fonts
+				Typeface fuente = Typeface.createFromAsset(this.getAssets(),
+						"fonts/perigord.ttf");
 				title.setTypeface(fuente);
 				title.setTextColor(Color.BLACK);
 			}
@@ -234,9 +235,9 @@ public class ActivityList extends Activity {
 			}
 
 			holder.next.setImageResource(R.drawable.navigation_next_item);
-			Typeface fuente = Typeface.createFromAsset(getAssets(),
-					"TravelingTypewriter.ttf");
-
+			//Definiendo una fuente desde la carpeta assets/fonts
+			Typeface fuente= Typeface.createFromAsset(getApplicationContext().getAssets(),
+					"fonts/TravelingTypewriter.ttf");
 			holder.title.setTypeface(fuente);
 			holder.descrip.setTypeface(fuente);
 			holder.date.setTypeface(fuente);

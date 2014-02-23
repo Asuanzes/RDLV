@@ -28,8 +28,9 @@ public class AyudaApp extends Activity {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 			TextView title = (TextView) findViewById(actionBarTitleId);
 			if (title != null) {
-				Typeface fuente = Typeface.createFromAsset(getAssets(),
-						"perigord.ttf");
+				//Definiendo una fuente desde la carpeta assets/fonts
+				Typeface fuente = Typeface.createFromAsset(this.getAssets(),
+						"fonts/perigord.ttf");
 				title.setTypeface(fuente);
 				title.setTextColor(Color.BLACK);
 			}
@@ -56,8 +57,9 @@ public class AyudaApp extends Activity {
 		TextView texto4 = (TextView) findViewById(R.id.texto_ayuda4);
 		TextView texto5 = (TextView) findViewById(R.id.texto_ayuda5);
 
-		Typeface fonTitle = Typeface.createFromAsset(getAssets(),
-				"TravelingTypewriter.ttf");
+		//Definiendo una fuente desde la carpeta assets/fonts
+		Typeface fonTitle = Typeface.createFromAsset(this.getAssets(),
+				"fonts/TravelingTypewriter.ttf");
 		titulo1.setTypeface(fonTitle);
 		titulo2.setTypeface(fonTitle);
 		titulo3.setTypeface(fonTitle);

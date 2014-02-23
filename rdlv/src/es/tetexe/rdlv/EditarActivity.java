@@ -89,8 +89,9 @@ public class EditarActivity extends Activity {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 			TextView title = (TextView) findViewById(actionBarTitleId);
 			if (title != null) {
-				Typeface fuente = Typeface.createFromAsset(getAssets(),
-						"perigord.ttf");
+				//Definiendo una fuente desde la carpeta assets/fonts
+				Typeface fuente = Typeface.createFromAsset(this.getAssets(),
+						"fonts/perigord.ttf");
 				title.setTypeface(fuente);
 				title.setTextColor(Color.BLACK);
 			}
@@ -119,14 +120,14 @@ public class EditarActivity extends Activity {
 			Button btnSave = (Button) findViewById(R.id.btnSave);
 			Button btnDelete = (Button) findViewById(R.id.btnDelete);
 
-			// Personalizando la fuente
-			Typeface fonTitle = Typeface.createFromAsset(getAssets(),
-					"TravelingTypewriter.ttf");
+			//Definiendo una fuente desde la carpeta assets/fonts
+			Typeface fuente = Typeface.createFromAsset(this.getAssets(),
+					"fonts/TravelingTypewriter.ttf");
 
-			title.setTypeface(fonTitle);
-			descrip.setTypeface(fonTitle);
-			btnDelete.setTypeface(fonTitle);
-			btnSave.setTypeface(fonTitle);
+			title.setTypeface(fuente);
+			descrip.setTypeface(fuente);
+			btnDelete.setTypeface(fuente);
+			btnSave.setTypeface(fuente);
 
 			/*
 			 * Recorremos la base de datos con el cursor y establecemos su
@@ -446,11 +447,12 @@ public class EditarActivity extends Activity {
 
 			Button btnCrear = (Button) findViewById(R.id.btnCrear);
 
-			Typeface fonTitles = Typeface.createFromAsset(getAssets(),
-					"TravelingTypewriter.ttf");
-			title.setTypeface(fonTitles);
-			descrip.setTypeface(fonTitles);
-			btnCrear.setTypeface(fonTitles);
+			//Definiendo una fuente desde la carpeta assets/fonts
+			Typeface fuente = Typeface.createFromAsset(this.getAssets(),
+					"fonts/TravelingTypewriter.ttf");
+			title.setTypeface(fuente);
+			descrip.setTypeface(fuente);
+			btnCrear.setTypeface(fuente);
 			/*
 			 * Establecemos los métodos necesarios para acceder a la galería de
 			 * imágenes o camara del dispositivo. Se accede a la selección de

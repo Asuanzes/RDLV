@@ -161,8 +161,8 @@ public class MostrarLugar extends Activity {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 			TextView title = (TextView) findViewById(actionBarTitleId);
 			if (title != null) {
-				Typeface fuente = Typeface.createFromAsset(getAssets(),
-						"perigord.ttf");
+				Typeface fuente = Typeface.createFromAsset(this.getAssets(),
+						"fonts/perigord.ttf");
 				title.setTypeface(fuente);
 				title.setTextColor(Color.BLACK);
 			}
@@ -175,8 +175,9 @@ public class MostrarLugar extends Activity {
 		descripLugar = (TextView) findViewById(R.id.descrip_lugar);
 		fecha = (TextView) findViewById(R.id.fecha_lugar);
 		// Personalizando la fuente
-		Typeface fuente = Typeface.createFromAsset(getAssets(),
-				"TravelingTypewriter.ttf");
+		//Definiendo una fuente desde la carpeta assets/fonts
+		Typeface fuente = Typeface.createFromAsset(this.getAssets(),
+				"fonts/TravelingTypewriter.ttf");
 		titulo.setTypeface(fuente);
 		descripLugar.setTypeface(fuente);
 		fecha.setTypeface(fuente);
